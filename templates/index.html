@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ CITY }} | Ramadan Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <form action="/" method="get" class="search-form">
+                <input type="text" name="city" placeholder="Enter City (e.g. Dhaka, London)" required>
+                <button type="submit">Search</button>
+            </form>
+            
+            {% if error_msg %}
+            <div class="error-banner">
+                {{ error_msg }}
+            </div>
+            {% endif %}
+
+            <p class="location-tag">Current Location: {{ CITY }}</p>
+            <h1>{{ day }}</h1>
+
+            <a href="https://www.google.com/maps/search/mosque+in+{{ CITY }}" 
+               target="_blank" 
+               class="mosque-btn">
+                🕌 Find Mosques in {{ CITY }}
+            </a>
+        </header>
+
+        <section class="main-times">
+            <div class="card highlight-sehri">
+                <h3>Seheri Ends (Fajr)</h3>
+                <p class="time" id="sehri-time">{{ prayer_times['Fajr'] }}</p>
+            </div>
+            <div class="card highlight-iftar">
+                <h3>Iftar Time (Maghrib)</h3>
+                <p class="time" id="iftar-time">{{ prayer_times['Maghrib'] }}</p>
+                <p id="countdown" class="countdown-timer"></p>
+            </div>
+        </section>
+
+        <section class="prayer-list">
+            <h3>Full Prayer Schedule</h3>
+            <div class="row"><span>Fajr</span> <strong>{{ prayer_times['Fajr'] }}</strong></div>
+            <div class="row"><span>Sunrise</span> <strong>{{ prayer_times['Sunrise'] }}</strong></div>
+            <div class="row"><span>Dhuhr</span> <strong>{{ prayer_times['Dhuhr'] }}</strong></div>
+            <div class="row)<span>Asr</span> <strong>{{ prayer_times['Asr'] }}</strong></div>
+            <div class="row"><span>Maghrib</span> <strong>{{ prayer_times['Maghrib'] }}</strong></div>
+            <div class="row"><span>Isha</span> <strong>{{ prayer_times['Isha'] }}</strong></div>
+        </section>
+
+        <footer>
+            <div class="verse-container">
+                <p class="verse-text">"{{ quran_verse.text }}"</p>
+                <p class="verse-ref">— {{ quran_verse.surah.englishName }} ({{ quran_verse.numberInSurah }})</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

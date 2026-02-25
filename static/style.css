@@ -1,0 +1,201 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #0f172a; 
+    color: #f8fafc;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.error-banner {
+    background: #7f1d1d; /* Dark Red */
+    color: #fca5a5;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    border: 1px solid #b91c1c;
+    text-align: center;
+}
+
+.search-form input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #334155;
+    background: #1e293b;
+    color: white;
+}
+
+.search-form button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: #10b981;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background: #059669;
+}
+
+.container {
+    max-width: 480px;
+    width: 100%;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.location-tag {
+    color: #10b981; 
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: #fbbf24;
+    line-height: 1.2;
+}
+
+.main-times {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+} 
+
+.card {
+    background-color: #1e293b;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #334155;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+
+.time {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+.highlight-sehri {
+    border-top: 4px solid #38bdf8; 
+}
+
+.highlight-iftar {
+    border-top: 4px solid #fbbf24; 
+    background: #1e1b4b; 
+}
+
+
+.prayer-list {
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-bottom: 30px;
+}
+
+.prayer-list h3 {
+    padding: 15px 0;
+    font-size: 1rem;
+    border-bottom: 1px solid #334155;
+    color: #10b981;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #334155;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.row span {
+    color: #cbd5e1;
+}
+
+.row strong {
+    color: #f1f5f9;
+}
+
+.verse-container {
+    background: linear-gradient(135deg, #020617 0%, #1e293b 100%);
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid #10b981;
+    text-align: center;
+}
+
+.verse-text {
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e2e8f0;
+    margin-bottom: 15px;
+}
+
+.verse-ref {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #10b981;
+}
+/* Mosque Button Styling */
+.mosque-btn {
+    display: inline-block;
+    background-color: #10b981; /* Emerald Green */
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 12px;
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mosque-btn:hover {
+    background-color: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Countdown Text Styling */
+.countdown-timer {
+    color: #fbbf24;
+    font-weight: bold;
+    margin-top: 8px;
+    font-size: 0.9rem;
+    min-height: 1.2rem; /* Prevents layout jump when text appears */
+}
