@@ -10,7 +10,16 @@ RAMADAN_START = datetime(2026, 2, 19)
 
 def format_12hr(time_str):
     # This takes "18:30" and returns "06:30 PM"
-    return datetime.strptime(time_str, "%H:%M").strftime("%I:%M %p")
+    # Some API timings include extra text like "05:00 (BDT)" - take first token
+    try:
+        core = time_str.split()[0]
+        # Ensure format is HH:MM
+        if ':' in core:
+            return datetime.strptime(core, "%H:%M").strftime("%I:%M %p")
+    except Exception:
+        pass
+    # Fallback: return original string
+    return time_str
 
 def get_ramadan_day():
     today = datetime.now()

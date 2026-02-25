@@ -42,7 +42,10 @@ function updateLocation() {
         const encodedLocation = encodeURIComponent(input);
         mosqueBtn.href = `https://www.google.com/maps/search/mosques+in+${encodedLocation}`;
         
-        // (In a real app, you would also fetch new prayer times here)
+        // Reload the page with the new city so server can return prayer times
+        // Use location.replace to avoid creating a history entry when searching
+        const query = `?city=${encodedLocation}`;
+        window.location.href = `/${query}`;
     }
 }
 

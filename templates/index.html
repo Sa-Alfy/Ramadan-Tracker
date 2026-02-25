@@ -19,22 +19,22 @@
         </div>
         <header>
             <div class="search-form">
-                <input type="text" id="location-input" placeholder="Enter city name..." value="Dhaka">
+                <input type="text" id="location-input" placeholder="Enter city name..." value="{{ CITY }}">
                 <button onclick="updateLocation()">Search</button>
             </div>
-            <div class="location-tag" id="location-display">DHAKA, BANGLADESH</div>
+            <div class="location-tag" id="location-display">{{ CITY|upper }}</div>
             <h1>Ramadan Times</h1>
-            <a href="https://www.google.com/maps/search/mosques+in+Dhaka" target="_blank" id="mosque-btn" class="mosque-btn">🕌 Find Mosques Nearby</a>
+            <a href="https://www.google.com/maps/search/mosques+in+{{ CITY | replace(' ', '+') }}" target="_blank" id="mosque-btn" class="mosque-btn">🕌 Find Mosques Nearby</a>
         </header>
 
         <div class="main-times">
             <div class="card highlight-sehri">
                 <h3>SEHRI ENDS</h3>
-                <div class="time" id="sehri-time">04:55 AM</div>
+                <div class="time" id="sehri-time">{{ prayer_times.get('Fajr', '04:55 AM') }}</div>
             </div>
             <div class="card highlight-iftar">
                 <h3>IFTAR TIME</h3>
-                <div class="time" id="iftar-time">06:15 PM</div>
+                <div class="time" id="iftar-time">{{ prayer_times.get('Maghrib', '06:15 PM') }}</div>
                 <div id="countdown" class="countdown-timer">Remaining: --h --m --s</div>
             </div>
         </div>
@@ -93,11 +93,11 @@
 
         <div class="prayer-list">
             <h3>Prayer Times</h3>
-            <div class="row"><span>Fajr</span> <strong>05:00 AM</strong></div>
-            <div class="row"><span>Dhuhr</span> <strong>12:15 PM</strong></div>
-            <div class="row"><span>Asr</span> <strong>04:30 PM</strong></div>
-            <div class="row"><span>Maghrib</span> <strong>06:15 PM</strong></div>
-            <div class="row"><span>Isha</span> <strong>07:45 PM</strong></div>
+            <div class="row"><span>Fajr</span> <strong>{{ prayer_times.get('Fajr', '05:00 AM') }}</strong></div>
+            <div class="row"><span>Dhuhr</span> <strong>{{ prayer_times.get('Dhuhr', '12:15 PM') }}</strong></div>
+            <div class="row"><span>Asr</span> <strong>{{ prayer_times.get('Asr', '04:30 PM') }}</strong></div>
+            <div class="row"><span>Maghrib</span> <strong>{{ prayer_times.get('Maghrib', '06:15 PM') }}</strong></div>
+            <div class="row"><span>Isha</span> <strong>{{ prayer_times.get('Isha', '07:45 PM') }}</strong></div>
         </div>
 
         <div class="verse-container">
