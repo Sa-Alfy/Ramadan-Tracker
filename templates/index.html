@@ -3,89 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ CITY }} | Ramadan Tracker</title>
+    <title>Ramadan Tracker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <header>
-            <form action="/" method="get" class="search-form">
-                <input type="text" name="city" placeholder="Enter City (e.g. Dhaka, London)" required>
-                <button type="submit">Search</button>
-            </form>
-            
-            {% if error_msg %}
-            <div class="error-banner">
-                {{ error_msg }}
+        <div class="ramadan-day-indicator">
+            <div class="indicator-top">
+                <span class="day-info"><span id="current-day">Thursday</span>, <span id="current-date">Feb 25, 2026</span></span>
+                <span class="live-clock" id="live-clock">00:00:00</span>
             </div>
-            {% endif %}
-
-            <p class="location-tag">Current Location: {{ CITY }}</p>
-            <h1>{{ day }}</h1>
-
-            <a href="https://www.google.com/maps/search/mosques+in+{{ CITY }}" 
-               target="_blank" 
-               class="mosque-btn">
-               🕌 Find Mosques in {{ CITY }}
-            </a>
+            <div class="indicator-bottom">
+                <span id="ramadan-day-text">{{ day }}</span>
+            </div>
+        </div>
+        <header>
+            <div class="search-form">
+                <input type="text" id="location-input" placeholder="Enter city name..." value="Dhaka">
+                <button onclick="updateLocation()">Search</button>
+            </div>
+            <div class="location-tag" id="location-display">DHAKA, BANGLADESH</div>
+            <h1>Ramadan Times</h1>
+            <a href="https://www.google.com/maps/search/mosques+in+Dhaka" target="_blank" id="mosque-btn" class="mosque-btn">🕌 Find Mosques Nearby</a>
         </header>
 
-        <section class="main-times">
+        <div class="main-times">
             <div class="card highlight-sehri">
-                <h3>Seheri Ends (Fajr)</h3>
-                <p class="time" id="sehri-time">{{ prayer_times['Fajr'] }}</p>
+                <h3>SEHRI ENDS</h3>
+                <div class="time" id="sehri-time">04:55 AM</div>
             </div>
             <div class="card highlight-iftar">
-                <h3>Iftar Time (Maghrib)</h3>
-                <p class="time" id="iftar-time">{{ prayer_times['Maghrib'] }}</p>
-                <p id="countdown" class="countdown-timer"></p>
+                <h3>IFTAR TIME</h3>
+                <div class="time" id="iftar-time">06:15 PM</div>
+                <div id="countdown" class="countdown-timer">Remaining: --h --m --s</div>
             </div>
-        </section>
+        </div>
 
-      <section id="fasting-tracker" class="tracker-container">
-            <h2>Fasting Progress</h2>
-                <div class="stats-summary">
-                <div>
-                    <span id="count-fasted">0</span>
-                    <p>Days Fasted</p>
-                </div>
-                <div>
-                    <span id="count-qada">0</span>
-                    <p>To Make Up</p>
-                </div>
+        <div class="collapsible-wrapper">
+            <button class="toggle-btn" onclick="toggleSection('tracker-content', this)">
+                <span>🌙 Fasting Tracker</span>
+                <span class="icon">▼</span>
+            </button>
+            <div id="tracker-content" class="collapsible-content">
+                <section class="tracker-container">
+                    <div class="stats-summary">
+                        <div>
+                            <span id="count-fasted">0</span>
+                            <p>Days Fasted</p>
+                        </div>
+                        <div>
+                            <span id="count-qada">0</span>
+                            <p>To Make Up</p>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                    <div id="days-grid" class="days-grid"></div>
+                    <div class="tracker-legend">
+                        <span><i class="dot fasted"></i> Participated</span>
+                        <span><i class="dot missed"></i> Missed</span>
+                    </div>
+                    <button id="reset-tracker" class="btn-secondary">Reset All Data</button>
+                </section>
             </div>
+        </div>
 
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
+        <div class="collapsible-wrapper">
+            <button class="toggle-btn" onclick="toggleSection('qibla-content', this)">
+                <span>🕋 Qibla Compass</span>
+                <span class="icon">▼</span>
+            </button>
+            <div id="qibla-content" class="collapsible-content">
+                <section class="qibla-container">
+                    <div class="card" style="border:none; margin-top: 10px;">
+                        <div class="compass-wrapper">
+                            <div class="compass">
+                                <div class="compass-circle"></div>
+                                <div id="qibla-arrow" class="arrow"></div>
+                            </div>
+                        </div>
+                        <p id="qibla-degrees">--°</p>
+                        <button id="start-compass" class="mosque-btn">Enable Compass</button>
+                        <p class="compass-note">Calibrate by moving your phone in an 8-figure motion.</p>
+                    </div>
+                </section>
             </div>
+        </div>
 
-            <div id="days-grid" class="days-grid">
-                </div>
+        <div class="prayer-list">
+            <h3>Prayer Times</h3>
+            <div class="row"><span>Fajr</span> <strong>05:00 AM</strong></div>
+            <div class="row"><span>Dhuhr</span> <strong>12:15 PM</strong></div>
+            <div class="row"><span>Asr</span> <strong>04:30 PM</strong></div>
+            <div class="row"><span>Maghrib</span> <strong>06:15 PM</strong></div>
+            <div class="row"><span>Isha</span> <strong>07:45 PM</strong></div>
+        </div>
 
-            <div class="tracker-legend">
-                <span><i class="dot fasted"></i> Fasted</span>
-                <span><i class="dot missed"></i> Missed / Skip</span>
-            </div>
-            
-            <button id="reset-tracker" class="btn-secondary">Reset All Data</button>
-        </section>
-        <section class="prayer-list">
-            <h3>Full Prayer Schedule</h3>
-            <div class="row"><span>Fajr</span> <strong>{{ prayer_times['Fajr'] }}</strong></div>
-            <div class="row"><span>Sunrise</span> <strong>{{ prayer_times['Sunrise'] }}</strong></div>
-            <div class="row"><span>Dhuhr</span> <strong>{{ prayer_times['Dhuhr'] }}</strong></div>
-            <div class="row"><span>Asr</span> <strong>{{ prayer_times['Asr'] }}</strong></div>
-            <div class="row"><span>Maghrib</span> <strong>{{ prayer_times['Maghrib'] }}</strong></div>
-            <div class="row"><span>Isha</span> <strong>{{ prayer_times['Isha'] }}</strong></div>
-        </section>
-
-        <footer>
-            <div class="verse-container">
-                <p class="verse-text">"{{ quran_verse.text }}"</p>
-                <p class="verse-ref">— {{ quran_verse.surah.englishName }} ({{ quran_verse.numberInSurah }})</p>
-            </div>
-        </footer>
+        <div class="verse-container">
+            <p class="verse-text">"O you who have believed, decreed upon you is fasting as it was decreed upon those before you that you may become righteous."</p>
+            <p class="verse-ref">- Quran 2:183</p>
+        </div>
     </div>
+
     <div id="status-modal" class="modal-overlay">
         <div class="modal-content">
             <h3 id="modal-title">Day 1</h3>
@@ -98,6 +118,13 @@
             <button onclick="closeModal()" class="btn-close">Cancel</button>
         </div>
     </div>
+    </div>
+
+    <footer class="developer-footer">
+        <p>Developed by: <strong>Shariar Ahamed</strong></p>
+        <p>Contact: <a href="mailto:saaulfy@gmail.com">saaulfy@gmail.com</a></p>
+    </footer>
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
