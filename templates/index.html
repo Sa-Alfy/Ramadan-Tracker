@@ -23,10 +23,10 @@
             <p class="location-tag">Current Location: {{ CITY }}</p>
             <h1>{{ day }}</h1>
 
-            <a href="https://www.google.com/maps/search/mosque+in+{{ CITY }}" 
+            <a href="https://www.google.com/maps/search/mosques+in+{{ CITY }}" 
                target="_blank" 
                class="mosque-btn">
-                🕌 Find Mosques in {{ CITY }}
+               🕌 Find Mosques in {{ CITY }}
             </a>
         </header>
 
@@ -42,6 +42,33 @@
             </div>
         </section>
 
+      <section id="fasting-tracker" class="tracker-container">
+            <h2>Fasting Progress</h2>
+                <div class="stats-summary">
+                <div>
+                    <span id="count-fasted">0</span>
+                    <p>Days Fasted</p>
+                </div>
+                <div>
+                    <span id="count-qada">0</span>
+                    <p>To Make Up</p>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+
+            <div id="days-grid" class="days-grid">
+                </div>
+
+            <div class="tracker-legend">
+                <span><i class="dot fasted"></i> Fasted</span>
+                <span><i class="dot missed"></i> Missed / Skip</span>
+            </div>
+            
+            <button id="reset-tracker" class="btn-secondary">Reset All Data</button>
+        </section>
         <section class="prayer-list">
             <h3>Full Prayer Schedule</h3>
             <div class="row"><span>Fajr</span> <strong>{{ prayer_times['Fajr'] }}</strong></div>
@@ -59,7 +86,18 @@
             </div>
         </footer>
     </div>
-
+    <div id="status-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="modal-title">Day 1</h3>
+            <p>Did you fast today?</p>
+            <div class="modal-actions">
+                <button onclick="setStatus('fasted')" class="btn-fasted">✅ Participated</button>
+                <button onclick="setStatus('missed')" class="btn-missed">❌ Missed</button>
+                <button onclick="setStatus('none')" class="btn-clear">Reset Day</button>
+            </div>
+            <button onclick="closeModal()" class="btn-close">Cancel</button>
+        </div>
+    </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
